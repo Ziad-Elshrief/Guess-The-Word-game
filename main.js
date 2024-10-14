@@ -97,13 +97,25 @@ function generateInputs() {
 
 function checkWord() {
   let correctWord = true;
+  let emptyInputs=false;
+  const inputs = document.querySelectorAll(`.guess-${currentGuess} input`);
+  inputs.forEach((input)=>{
+    if(input.value == ""){
+     emptyInputs=true;
+   }
+  });
+  if(emptyInputs){
+     /* Disaplay Message */
+     messageArea.innerHTML = `Word must be ${lettersNumber} letters`;
+    return;
+  }
   for (let i = 1; i <= lettersNumber; i++) {
     const input = document.getElementById(`guess-${currentGuess}-letter-${i}`);
     const letter = input.value;
     const actualLetter = randomWord[i - 1];
     if (letter === actualLetter) {
       input.classList.add("in-place");
-    } else if (randomWord.includes(letter) && letter != "") {
+    } else if (randomWord.includes(letter)) {
       input.classList.add("not-in-place");
       correctWord = false;
     } else {
